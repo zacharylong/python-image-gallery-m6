@@ -1,0 +1,141 @@
+import psycopg2
+import sys
+from psycopg2.errors import UniqueViolation
+
+db_host = "demo-database-1.ccywtilknp5x.us-east-2.rds.amazonaws.com"
+db_name = "image_gallery"
+db_user = "image_gallery"
+
+password_file = "/home/ec2-user/.image_gallery_config"
+
+connection = None
+
+def get_password():
+    f = open(password_file, "r")
+    result = f.readline()
+    f.close()
+    return result[:-1]
+
+def connect():
+    global connection
+    connection = psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=get_password())
+    connection.set_session(autocommit=True)
+
+def execute(query,args=None):
+    global connection
+    cursor = connection.cursor()
+    if not args:
+        cursor.execute(query)
+    else:
+        cursor.execute(query, args)
+    return cursor
+
+def list_users():
+##    print("\nList users need to format:")
+    res = execute('select * from users')
+    print('\nusername\tpassword\tfull name')
+    print( 41 * '-')
+    for row in res:
+        print(row[0] + '\t\t' + row[1] + '\t\t' + row[2])
+    print('')
+
+    
+
+def add_user():
+    try:
+        ## print("\nAdding user to the system")
+        print("\n")
+        create_user = input('Username> ')
+        create_password = input('Password> ')
+        create_full_name = input('Full name> ')
+        test_insert = execute("select * from users where username = '%s';" % create_user)
+        if test_insert == create_user:
+            print("Error: user with username %s already exists" % create_user)
+            
+        else:
+            res = execute('insert into users values (%s, %s, %s);', (create_user, create_password, create_full_name))
+            ##print("Created user: %s" % create_user)
+    except psycopg2.Error as e:
+        error = e.pgcode
+        connection.rollback()
+        ##print("Cannot insert due to error %s, user already exists" % error )
+        
+
+def edit_user():
+##    print("Editing user")
+##    print("\n")
+    user_to_edit = input('\nUsername to edit> ')
+##    edit_test = execute("select exists(select 1 from users where username='%s');" % user_to_edit)
+##    print(edit_test)
+##    if edit_test == True:
+##        print("True eval?")
+##    else:
+##        print("dunno")
+    edit_test = execute("select * from users where username = '%s';" % user_to_edit)
+    for row in edit_test:
+        if row[0] == user_to_edit:
+##            print("can edit")
+            print('\nUsername to edit> %s' % user_to_edit)
+##            username_to_edit = input('Username to edit> ')
+            new_password = input('New password (press enter to keep current)> ')
+            new_full_name = input('New full name (press enter to keep current)> ')
+            if new_password != '':
+                exec_pass_update = execute("update users set password=%s where username=%s", (new_password, user_to_edit))
+            if new_full_name != '':
+                exec_name_update = execute("update users set full_name=%s where username=%s", (new_full_name, user_to_edit))
+        else:
+            print('No such user.')
+
+def delete_user():
+    print("deleting user")
+    user_to_delete = input('\nEnter username to delete> ')
+    confirm_delete = input('\nAre you sure that you want to delete %s? ' % user_to_delete)
+    ## do delete
+    if confirm_delete == 'Yes' or confirm_delete == 'yes':
+        execute("delete from users where username='%s';" % user_to_delete)
+    print('\nDeleted.')
+
+    
+def top_menu():
+    print('1) List users')
+    print('2) Add user')
+    print('3) Edit user')
+    print('4) Delete user')
+    print('5) Quit')
+    print('Enter command> ')
+
+def menu_system():
+    choice = input("""1) List users\n2) Add user\n3) Edit user\n4) Delete user\n5) Quit\nEnter command> """)
+
+    if choice == "1":
+        list_users()
+        menu_system()
+
+    elif choice == "2":
+        add_user()
+        menu_system()
+
+    elif choice == "3":
+        edit_user()
+        menu_system()
+
+    elif choice == "4":
+        delete_user()
+        menu_system()
+
+    elif choice == "5":
+        print('\nBye.')
+        sys.exit()
+        
+    else:
+        "Invalid selection, try again"
+        menu_system()
+        
+def main():    
+    connect()
+    menu_system()
+    
+    
+    
+if __name__ == '__main__':
+    main()
