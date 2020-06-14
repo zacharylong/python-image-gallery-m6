@@ -29,6 +29,8 @@ def calculator(personsName):
 
 @app.route('/admin')
 def adminPage():
+    x = request.args.get('stuff')
+    users = sql(
     return render_template('admin.html')
 
 @app.route('/admin/listUser')

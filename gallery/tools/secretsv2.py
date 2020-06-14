@@ -62,4 +62,3 @@ def get_secret_image_gallery():
         return decoded_binary_secret
     else:
         return secret
-

@@ -29,7 +29,7 @@ def get_username(secret):
 
 def get_dbname(secret):
     return secret['database_name']
-
+    
 def connect():
     global connection
     secret = get_secret()
