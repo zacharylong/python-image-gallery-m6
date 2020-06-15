@@ -53,6 +53,19 @@ def list_users():
         print(row[0] + '\t\t' + row[1] + '\t\t' + row[2])
     print('')
 
+def list_users_again():
+    #global connection
+    #secret = get_secret()
+    #connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
+    #connection.set_session(autocommit=True)
+    connect()
+    cursor = connection.cursor()
+    cursor.execute('select * from users')
+    #row = cursor.fetchone()
+    list_all_results = cursor.fetchall()
+    connection.commit()
+    print(list_all_results)
+    return list_all_results
     
 
 def add_user():
@@ -73,7 +86,25 @@ def add_user():
         error = e.pgcode
         connection.rollback()
         ##print("Cannot insert due to error %s, user already exists" % error )
-        
+
+def add_user_again(usernameToCreate, passwordToCreate, fullnameToCreate):
+    try:
+        print("Adding user to the system")                                                                                                  
+        create_user = usernameToCreate
+        create_password = passwordToCreate
+        create_full_name = fullnameToCreate
+        test_insert = execute("select * from users where username = '%s';" % create_user)
+        if test_insert == create_user:
+            print("Error: user with username %s already exists" % create_user)
+
+        else:
+            res = execute('insert into users values (%s, %s, %s);', (create_user, create_password, create_full_name))
+            print("Created user: %s" % create_user)
+            
+    except psycopg2.Error as e:
+        error = e.pgcode
+        connection.rollback()
+        print("Cannot insert due to error %s, user already exists" % error ) 
 
 def edit_user():
 ##    print("Editing user")
@@ -100,6 +131,17 @@ def edit_user():
         else:
             print('No such user.')
 
+def edit_user_again(userToEdit, passwordToEdit, fullnameToEdit):
+    user_to_edit = userToEdit
+    connect()
+    cursor = connection.cursor()
+    cursor.execute('select * from users')
+    new_password = passwordToEdit
+    new_full_name = fullnameToEdit
+    exec_pass_update = execute("update users set password=%s where username=%s", (new_password, user_to_edit))
+    exec_name_update = execute("update users set full_name=%s where username=%s", (new_full_name, user_to_edit))
+    connection.commit()
+
 def delete_user():
     print("deleting user")
     user_to_delete = input('\nEnter username to delete> ')
@@ -109,6 +151,15 @@ def delete_user():
         execute("delete from users where username='%s';" % user_to_delete)
     print('\nDeleted.')
 
+def delete_user_again(user):
+    print("Delete user clicked in HTML")
+    user_to_delete = user
+    print("this is user_admin sending execute delete for %s",(user_to_delete,))
+    #execute("delete from users where username='username';")
+    #print("manually deleting username for testing")
+    #execute("delete from users where username='%s';" % user_to_delete)
+    #new formatting without quotes
+    execute("DELETE from users where username=%s",(user_to_delete,))
     
 def top_menu():
     print('1) List users')

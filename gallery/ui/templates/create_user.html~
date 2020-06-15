@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create User</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Create User:</h1>
+    <form action="/admin/createExec" method="POST">
+      Username: <input name="usernameToCreate" value="" /><br />
+      Password: <input name="passwordToCreate" value="" /><br />
+      Full Name: <input name="fullnameToCreate" value="" /><br />
+      <input type="submit" value="Create!" />      
+    </form>
+  </body>
+</html>
