@@ -3,7 +3,9 @@ from flask import request
 from flask import render_template
 from flask import jsonify
 from flask import redirect, url_for
-from user_admin_m3 import list_users, add_user_again, edit_user_again, delete_user_again, list_users_again
+#from . import user_admin_m3
+#turn off above to run in-directory
+from .user_admin_m3 import add_user_again, edit_user_again, delete_user_again, list_users_again
 
 app = Flask(__name__)
 

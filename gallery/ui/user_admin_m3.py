@@ -1,7 +1,9 @@
 import psycopg2
 import sys
 import json
-from secrets import get_secret_image_gallery
+#from . import secrets
+#turn off the above to work in directory
+from .secrets import get_secret_image_gallery
 from psycopg2.errors import UniqueViolation
 
 #db_host = "demo-database-1.ccywtilknp5x.us-east-2.rds.amazonaws.com"
