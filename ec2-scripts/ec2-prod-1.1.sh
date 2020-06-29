@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 export IMAGE_GALLERY_SCRIPT_VERSION="1.1"
-CONFIG_BUCKET="edu.au.cc.image-gallery-config"
+CONFIG_BUCKET="edu.au.cc.m5-image-gallery-superunique-config"
 
 # Install packages
 yum -y update
