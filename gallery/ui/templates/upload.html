@@ -6,28 +6,17 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>List Users</title>
+        <title>Upload Image</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <!-- [if lt IE 7]>
+        <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h1>List of Users</h1>
-	
-	{% block body %}
-	<ul class=entires>
-	  {% for entry in list %}
-	  <li><h2>{{ entry.username }}</h2></li>
-	  <br>
-	  {% else %}
-	  <li><em>No entry here</em></li>
-	  {% endfor %}
-	</ul>
-	{% endblock %}
-	
+        <h1>Upload Images</h1>
+        
         <script src="" async defer></script>
     </body>
 </html>
