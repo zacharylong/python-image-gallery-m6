@@ -9,10 +9,38 @@ from .user_admin_m3 import add_user_again, edit_user_again, delete_user_again, l
 from flask import session
 from .secrets import get_secret_flask_session
 from functools import wraps
+from .s3 import list_files, download_file, upload_file
+import os
+from flask import send_file
 
 
 app = Flask(__name__)
+
 app.get_secret_key = get_secret_flask_session
+UPLOAD_FOLDER = "uploads"
+BUCKET = "edu.au.cc.m5-image-gallery-superunique"
+
+@app.route('/storage')
+def storage():
+    contents = list_files("edu.au.cc.m5-image-gallery-superunique")
+    return render_template('storage.html', contents=contents)
+
+@app.route('/upload', method=['POST'])
+def upload():
+    if request.method == "POST":
+        f = request.files['file']
+        f.save(os.path.join(UPLOAD_FOLDER, f.filename))
+        upload_file(f"uploads/{f.filename}", BUCKET)
+
+        return redirect('/storage')
+
+@app.route('/download/<filename>', methods=['GET'])
+def download(filename):
+    if request.method == 'GET':
+        output = download_file(filename, BUCKET)
+
+        return send_file(output, as_attachment=True)
+
 
 def get_user_dao():
     return PostgresUserDAO()
