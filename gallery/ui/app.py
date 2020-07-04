@@ -18,11 +18,11 @@ app = Flask(__name__)
 
 app.get_secret_key = get_secret_flask_session
 UPLOAD_FOLDER = "uploads"
-BUCKET = "edu.au.cc.m5-image-gallery-superunique"
+BUCKET = "zacs-m6-image-gallery"
 
 @app.route('/storage')
 def storage():
-    contents = list_files("edu.au.cc.m5-image-gallery-superunique")
+    contents = list_files("zacs-m6-image-gallery")
     return render_template('storage.html', contents=contents)
 
 @app.route('/upload', method=['POST'])
