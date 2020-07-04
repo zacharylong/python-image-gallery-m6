@@ -57,7 +57,7 @@ def requires_admin(view):
     return decorated
 
 @app.route('/')
-def hello_world():
+def home_page():
     return render_template('main.html')
 
 @app.route('/goodbye')
@@ -173,6 +173,7 @@ def invalidLogin():
     flash('Invalid credentials, try again!')
     return render_template('invalid_login.html')
     # Implement Message Flashing here
+    # moved this to regular login to flash and redirect.
 
 
 @app.route('/login', methods=['GET', 'POST'])
