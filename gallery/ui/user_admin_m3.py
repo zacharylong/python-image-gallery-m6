@@ -15,17 +15,7 @@ from psycopg2.errors import UniqueViolation
 connection = None
 
 def get_secret():
-    # jsonString = get_secret_image_gallery()
-    # manually pass the secret?
-    jsonString = "{
-  "username": "image_gallery",
-  "password": "n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n",
-  "engine": "postgres",
-  "host": "m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com",
-  "port": 5432,
-  "dbInstanceIdentifier": "m6-demo-db",
-  "database_name": "image_gallery"
-}"
+    jsonString = get_secret_image_gallery()
     return json.loads(jsonString)
 
 def get_password(secret):       
@@ -44,7 +34,18 @@ def connect():
     global connection
     secret = get_secret()
     #connection = psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=get_password())
-    connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
+#     {
+#   "username": "image_gallery",
+#   "password": "n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n",
+#   "engine": "postgres",
+#   "host": "m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com",
+#   "port": 5432,
+#   "dbInstanceIdentifier": "m6-demo-db",
+#   "database_name": "image_gallery"
+#     }
+    #connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
+    #manual connection
+    connection = psycopg2.connect(host="m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com", dbname="image_gallery", user="image_gallery", password="n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n")
     connection.set_session(autocommit=True)
 
 def execute(query,args=None):
