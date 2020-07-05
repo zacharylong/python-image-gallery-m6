@@ -3,7 +3,7 @@ import sys
 import json
 #from . import secrets
 #turn off the above to work in directory
-from .secrets import get_secret_image_gallery
+from .secrets import get_secret
 from psycopg2.errors import UniqueViolation
 
 #db_host = "demo-database-1.ccywtilknp5x.us-east-2.rds.amazonaws.com"
@@ -15,7 +15,7 @@ from psycopg2.errors import UniqueViolation
 connection = None
 
 def get_secret():
-    jsonString = get_secret_image_gallery()
+    jsonString = get_secret()
     return json.loads(jsonString)
 
 def get_password(secret):       
