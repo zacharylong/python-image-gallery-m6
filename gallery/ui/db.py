@@ -1,7 +1,7 @@
 import psycopg2
 import sys
 import json
-from ..ui.secrets import get_secret_image_gallery
+from .secrets import get_secret_image_gallery
 from psycopg2.errors import UniqueViolation
 
 connection = None

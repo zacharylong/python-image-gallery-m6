@@ -13,9 +13,9 @@ from .s3 import list_files, download_file, upload_file
 import os
 from flask import send_file
 from flask import session
-from ..data.user import User
-from ..data.postgres_user_dao import PostgresUserDAO
-from ..data.db import connect
+from .user import User
+from .postgres_user_dao import PostgresUserDAO
+from .db import connect
 
 
 
