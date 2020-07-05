@@ -1,5 +1,6 @@
 # https://stackabuse.com/file-management-with-aws-s3-python-and-flask/
 import boto3
+from boto3.s3.key import Key
 
 def upload_file(file_name, bucket):
     object_name = file_name
@@ -26,3 +27,4 @@ def list_files(bucket):
         pass
 
     return contents
+
