@@ -33,7 +33,7 @@ BUCKET = "zacs-m6-image-gallery"
 
 # users list using the dao this time from example
 @app.route('/admin/usersdao')
-def users():
+def usersdao():
     return render_template('users.html', users=get_user_dao().get_users())
 
 @app.route('/admin/deleteUserdao/<username>')
