@@ -1,5 +1,4 @@
-from . import db
-from .db import get_secret, get_password, get_host, get_username, get_dbname, connect
+from .db import get_secret, get_password, get_host, get_username, get_dbname, connect, execute
 from .user import User
 from .user_dao import UserDAO
 
