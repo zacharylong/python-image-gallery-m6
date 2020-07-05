@@ -32,7 +32,8 @@ def get_dbname(secret):
 
 def connect():
     global connection
-    secret = get_secret()
+    #secret = get_secret()
+    # comment out get secret for m6
     #connection = psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=get_password())
 #     {
 #   "username": "image_gallery",
