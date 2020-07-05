@@ -15,7 +15,11 @@ from flask import send_file
 from flask import session
 
 
+
 app = Flask(__name__)
+
+def get_user_dao():
+    return PostgresUserDAO()
 
 app.secret_key = b'*&SDUKGSD'
 app.get_secret_key = get_secret_flask_session
