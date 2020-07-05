@@ -68,7 +68,9 @@ def list_users_again():
     connection.commit()
     print(list_all_results)
     return list_all_results
-    
+
+def get_user():
+    return ""
 
 def add_user():
     try:

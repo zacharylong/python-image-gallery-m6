@@ -17,6 +17,7 @@ from flask import session
 
 app = Flask(__name__)
 
+app.secret_key = b'*&SDUKGSD'
 app.get_secret_key = get_secret_flask_session
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
@@ -92,7 +93,7 @@ def adminPage():
 @requires_admin
 def listUsers():
     x = list_users()
-    return render_template('list_user.html', names=x)
+    return render_template('list_users.html', names=x)
 
 @app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>')
 def modifyUser(user, password, fullname):
