@@ -13,10 +13,16 @@ from .s3 import list_files, download_file, upload_file
 import os
 from flask import send_file
 from flask import session
+from ..data.user import User
+from ..data.postgres_user_dao import PostgresUserDAO
+from ..data.db import connect
 
 
 
 app = Flask(__name__)
+
+# from db.py file connection method in new DAO model
+connect()
 
 def get_user_dao():
     return PostgresUserDAO()
@@ -25,6 +31,25 @@ app.secret_key = b'*&SDUKGSD'
 app.get_secret_key = get_secret_flask_session
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
+
+# users list using the dao this time from example
+@app.route('/admin/usersdao')
+def users():
+    return render_template('users.html', users=get_user_dao().get_users())
+
+@app.route('/admin/deleteUserdao/<username>')
+def deleteUserdao(username):
+    return render_template("confirm.html",
+                            title="Confirm delete",
+                            message="Are you sure you want to delete this user?",
+                            on_yes="/admin/executeDeleteUser"+username,
+                            on_no="/admin/usersdao"
+    )
+
+@app.route('/admin/executeDeleteUser/<username>')
+def executeDeleteUser(username):
+    get_user_dao.delete_user(username)
+    return redirect('/admin/usersdao')
 
 @app.route('/storage')
 def storage():
