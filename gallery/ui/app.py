@@ -201,7 +201,8 @@ def inc():
 @app.route('/invalidLogin')
 def invalidLogin():
     flash('Invalid credentials, try again!')
-    return render_template('invalid_login.html')
+    #return render_template('invalid_login.html')
+    return "Invalid"
     # Implement Message Flashing here
     # moved this to regular login to flash and redirect.
 
@@ -210,16 +211,16 @@ def invalidLogin():
 def login():
     if request.method == 'POST':
         user = get_user_dao().get_user_by_username(request.form["username"])
-        print("Got this user by username: " + str(user))
+        print("Got this user by username ---> " + str(user))
         if user is None or user.password != request.form["password"]:
             flash('Invalid credentials, try again!')
             #return redirect('/invalidLogin')
-            return redirect('/login')
+            return redirect('/invalidLogin')
         else:
             session['username'] = request.form["username"]
             #return redirect('/debugSession')
             # redirect to userlist/main page
-            return redirect('/admin/users')
+            return redirect('/debugSession')
     else: 
         return render_template('login.html')
 
