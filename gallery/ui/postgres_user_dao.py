@@ -16,3 +16,11 @@ class PostgresUserDAO(UserDAO):
 
     def delete_user(self, username):
         user_admin_m3.execute("delete from users where username=%s", (username,))
+
+    def get_user_by_username(self, username):
+        cursor = user_admin_m3.execute("select username,password,full_name from users where username=%s", (username,))
+        row = cursor.fetchone()
+        if row is None:
+            return None
+        else:
+            return User(row[0], row[1], row[2])
