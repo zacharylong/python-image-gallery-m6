@@ -26,7 +26,7 @@ connect()
 
 #move secret to secret manager
 #app.secret_key = b'*&SDUKGSD'
-app.get_secret_key = get_secret_flask_session()
+app.secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
 
