@@ -161,6 +161,7 @@ def debugSession():
     result = ""
     for key,value in session.items():
         result += key + "->" + str(value) + "<br />"
+    return result
 
 @app.route('/inc')
 def inc():
