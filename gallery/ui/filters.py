@@ -9,7 +9,8 @@ def datetimeformat(date_str):
 def file_type(key):
     file_info = os.path.splitext(key)
     file_extension = file_info[1]
-    try:
-        return mimetypes.types_map[file_extension]
-    except KeyError() as e:
-        return 'Unknown'
+    return mimetypes.types_map[file_extension]
+    # try:
+    #     return mimetypes.types_map[file_extension]
+    # except KeyError() as e:
+    #     return 'Unknown'
