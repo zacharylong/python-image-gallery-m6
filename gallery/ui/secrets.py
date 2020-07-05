@@ -7,7 +7,7 @@ import base64
 from botocore.exceptions import ClientError
 
 
-def get_secret():
+def get_secret_image_gallery():
 
     secret_name = "image_gallery_secret-m6"
     region_name = "us-east-2"

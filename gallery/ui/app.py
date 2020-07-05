@@ -5,7 +5,7 @@ from flask import jsonify
 from flask import redirect, url_for
 #from . import user_admin_m3
 #turn off above to run in-directory
-from .user_admin_m3 import add_user_again, edit_user_again, delete_user_again, list_users_again
+from .user_admin_m3 import connect, execute, add_user_again, edit_user_again, delete_user_again, list_users_again
 from flask import session
 from .secrets import get_secret_flask_session
 from functools import wraps
@@ -15,7 +15,7 @@ from flask import send_file
 from flask import session
 from .user import User
 from .postgres_user_dao import PostgresUserDAO
-from .db import connect
+# from .db import connect
 
 
 
