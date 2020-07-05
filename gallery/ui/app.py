@@ -16,8 +16,8 @@ from flask import session
 from .user import User
 from .postgres_user_dao import PostgresUserDAO
 from flask import flash
-import boto
-from boto.s3.key import Key
+import boto3
+from boto3.s3.key import Key
 
 
 
