@@ -1,13 +1,13 @@
 import psycopg2
 import sys
 import json
-from .secrets import get_secret_image_gallery
+from .secrets import get_secret
 from psycopg2.errors import UniqueViolation
 
 connection = None
 
 def get_secret():
-    jsonString = get_secret_image_gallery()
+    jsonString = get_secret()
     return json.loads(jsonString)
 
 def get_password(secret):       
