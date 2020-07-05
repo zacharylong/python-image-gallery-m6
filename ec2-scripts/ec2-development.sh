@@ -8,6 +8,7 @@ yum install -y java-11-openjdk-devel
 yum install -y git
 
 
+
 # Configure/install custom software
 cd /home/ec2-user
 git clone https://github.com/zacharylong/python-image-gallery-m6.git
