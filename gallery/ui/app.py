@@ -75,28 +75,29 @@ def executeDeleteUser(username):
     get_user_dao.delete_user(username)
     return redirect('/admin/usersdao')
 
-@app.route('/storage')
-def storage():
-    contents = list_files("zacs-m6-image-gallery")
-    return render_template('storage.html', contents=contents)
+# flaskdrive tutorial but upload never worked
+# @app.route('/storage')
+# def storage():
+#     contents = list_files("zacs-m6-image-gallery")
+#     return render_template('storage.html', contents=contents)
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    if request.method == "POST":
-        f = request.files['file']
-        #f.save(os.path.join(UPLOAD_FOLDER, f.filename))
-        f.save(os.path(f.filename))
-        #upload_file(f"uploads/{f.filename}", BUCKET)
-        upload_file(f"{f.filename}", BUCKET)
+# @app.route('/upload', methods=['POST'])
+# def upload():
+#     if request.method == "POST":
+#         f = request.files['file']
+#         #f.save(os.path.join(UPLOAD_FOLDER, f.filename))
+#         f.save(os.path(f.filename))
+#         #upload_file(f"uploads/{f.filename}", BUCKET)
+#         upload_file(f"{f.filename}", BUCKET)
 
-        return redirect('/storage')
+#         return redirect('/storage')
 
-@app.route('/download/<filename>', methods=['GET'])
-def download(filename):
-    if request.method == 'GET':
-        output = download_file(filename, BUCKET)
+# @app.route('/download/<filename>', methods=['GET'])
+# def download(filename):
+#     if request.method == 'GET':
+#         output = download_file(filename, BUCKET)
 
-        return send_file(output, as_attachment=True)
+#         return send_file(output, as_attachment=True)
 
 
 @app.route('/')
@@ -261,3 +262,13 @@ def files():
     summaries = my_bucket.objects.all()
 
     return render_template('files.html', my_bucket=my_bucket, files=summaries)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file']
+
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket.Object(file.filename).put(Body=file)
+
+    return redirect(url_for('files'))
