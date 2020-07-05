@@ -30,6 +30,20 @@ app.secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
 
+def get_user_dao():
+    return PostgresUserDAO()
+
+def check_admin():
+    return 'username' in session and session['username'] == 'Zac'
+
+def requires_admin(view):
+    @wraps(view)
+    def decorated(**kwargs):
+        if not check_admin():
+            return redirect('/login') 
+        return view(**kwargs)
+    return decorated
+
 # users list using the dao this time from example
 @app.route('/admin/usersdao')
 def usersdao():
@@ -70,20 +84,6 @@ def download(filename):
 
         return send_file(output, as_attachment=True)
 
-
-def get_user_dao():
-    return PostgresUserDAO()
-
-def check_admin():
-    return 'username' in session['username'] == 'Zac'
-
-def requires_admin(view):
-    @wraps(view)
-    def decorated(**kwargs):
-        if not check_admin():
-            return redirect('/login') 
-        return view(**kwargs)
-    return decorated
 
 @app.route('/')
 def home_page():
