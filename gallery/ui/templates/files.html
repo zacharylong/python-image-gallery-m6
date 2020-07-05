@@ -21,27 +21,27 @@
         <h1>Files</h1>
 
         {% block content %}
-        <div class="container">
+            <div class="container">
             <div class="col-12-xs">
-            <h3>Bucket Info</h3>
-            <p>Created: {{ my_bucket.creation_date }}</p>
-
-            <hr>
-            <table class="table table-striped">
+                <h3>Bucket Info</h3>
+                <p>Created: {{ my_bucket.creation_date | datetimeformat }}</p>
+        
+                <hr>
+                <table class="table table-striped">
                 <tr>
-                <th>Filename</th>
-                <th>Last Modified</th>
+                    <th>Filename</th>
+                    <th>Last Modified</th>
                 </tr>
                 {% for f in files %}
                 <tr>
-                <td>{{ f.key }}</td>
-                <td>{{ f.last_modified }}</td>
+                    <td>{{ f.key }}</td>
+                    <td>{{ f.last_modified | datetimeformat }}</td>
                 </tr>
                 {% endfor %}
-            </table>
-
+                </table>
+        
             </div>
-        </div>
+            </div>
         {% endblock %}
 
 

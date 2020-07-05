@@ -20,6 +20,7 @@ import boto3
 import logging
 from botocore.exceptions import ClientError
 from .s3config import S3_BUCKET, S3_KEY, S3_SECRET
+from .filters import datetimeformat
 
 
 app = Flask(__name__)
@@ -32,6 +33,7 @@ connect()
 app.secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
+app.jinja_env.filters['datetimeformat'] = datetimeformat
 
 s3_resource = boto3.resource(
    "s3",
