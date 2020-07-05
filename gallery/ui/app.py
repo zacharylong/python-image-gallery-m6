@@ -24,9 +24,9 @@ app = Flask(__name__)
 # from db.py file connection method in new DAO model
 connect()
 
-
-app.secret_key = b'*&SDUKGSD'
-app.get_secret_key = get_secret_flask_session
+#move secret to secret manager
+#app.secret_key = b'*&SDUKGSD'
+app.get_secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
 
