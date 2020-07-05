@@ -19,7 +19,7 @@ from flask import flash
 import boto3
 import logging
 from botocore.exceptions import ClientError
-
+from .config import S3_BUCKET, S3_KEY, S3_SECRET
 
 
 app = Flask(__name__)
@@ -32,6 +32,12 @@ connect()
 app.secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
+
+s3_resource = boto3.resource(
+   "s3",
+   aws_access_key_id=S3_KEY,
+   aws_secret_access_key=S3_SECRET
+)
 
 def get_user_dao():
     return PostgresUserDAO()
@@ -244,3 +250,11 @@ def uploadImage():
 @app.route('/viewImages')
 def viewImages():
     return render_template('viewImages.html')
+
+@app.route('/files')
+def files():
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    summaries = my_bucket.objects.all()
+
+    return render_template('files.html', my_bucket=my_bucket, files=summaries)
