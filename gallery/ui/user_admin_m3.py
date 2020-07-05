@@ -14,7 +14,7 @@ from psycopg2.errors import UniqueViolation
 
 connection = None
 
-def get_secret_image_gallery():
+def get_secret():
     jsonString = get_secret_image_gallery()
     return json.loads(jsonString)
 

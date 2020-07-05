@@ -15,14 +15,13 @@ from flask import send_file
 from flask import session
 from .user import User
 from .postgres_user_dao import PostgresUserDAO
-# from .db import connect
 
 
 
 app = Flask(__name__)
 
 # from db.py file connection method in new DAO model
-user_admin_m3.connect()
+connect()
 
 def get_user_dao():
     return PostgresUserDAO()
