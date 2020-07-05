@@ -220,7 +220,8 @@ def login():
             session['username'] = request.form["username"]
             #return redirect('/debugSession')
             # redirect to userlist/main page
-            return redirect('/debugSession')
+            # return redirect('/debugSession')
+            return redirect('/admin')
     else: 
         return render_template('login.html')
 
