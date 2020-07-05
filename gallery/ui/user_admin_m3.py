@@ -15,7 +15,17 @@ from psycopg2.errors import UniqueViolation
 connection = None
 
 def get_secret():
-    jsonString = get_secret_image_gallery()
+    # jsonString = get_secret_image_gallery()
+    # manually pass the secret?
+    jsonString = {
+  "username": "image_gallery",
+  "password": "n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n",
+  "engine": "postgres",
+  "host": "m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com",
+  "port": 5432,
+  "dbInstanceIdentifier": "m6-demo-db",
+  "database_name": "image_gallery"
+}
     return json.loads(jsonString)
 
 def get_password(secret):       
