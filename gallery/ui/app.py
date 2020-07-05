@@ -20,7 +20,7 @@ import boto3
 import logging
 from botocore.exceptions import ClientError
 from .s3config import S3_BUCKET, S3_KEY, S3_SECRET
-from .filters import datetimeformat
+from .filters import datetimeformat, file_type
 
 
 app = Flask(__name__)
