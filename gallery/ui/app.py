@@ -119,7 +119,7 @@ def adminPage():
 @app.route('/admin/listUsers')
 @requires_admin
 def listUsers():
-    x = list_users()
+    x = list_users_again()
     return render_template('list_users.html', names=x)
 
 @app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>')
