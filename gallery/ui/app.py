@@ -271,4 +271,5 @@ def upload():
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     my_bucket.Object(file.filename).put(Body=file)
 
+    flash('File uploaded successfully')
     return redirect(url_for('files'))
