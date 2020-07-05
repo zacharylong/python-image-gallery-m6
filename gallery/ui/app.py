@@ -22,7 +22,7 @@ from .postgres_user_dao import PostgresUserDAO
 app = Flask(__name__)
 
 # from db.py file connection method in new DAO model
-connect()
+user_admin_m3.connect()
 
 def get_user_dao():
     return PostgresUserDAO()
