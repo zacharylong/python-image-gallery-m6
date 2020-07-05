@@ -74,7 +74,7 @@ def get_user_dao():
     return PostgresUserDAO()
 
 def check_admin():
-    return 'username' in session['username'] == 'fred'
+    return 'username' in session['username'] == 'Zac'
 
 def requires_admin(view):
     @wraps(view)
