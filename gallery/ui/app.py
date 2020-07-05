@@ -15,6 +15,7 @@ from flask import send_file
 from flask import session
 from .user import User
 from .postgres_user_dao import PostgresUserDAO
+from flask import flash
 
 
 
@@ -209,6 +210,7 @@ def invalidLogin():
 def login():
     if request.method == 'POST':
         user = get_user_dao().get_user_by_username(request.form["username"])
+        print("Got this user by username: " + str(user))
         if user is None or user.password != request.form["password"]:
             flash('Invalid credentials, try again!')
             #return redirect('/invalidLogin')
