@@ -34,6 +34,7 @@ app.secret_key = get_secret_flask_session()
 UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
 app.jinja_env.filters['datetimeformat'] = datetimeformat
+app.jinja_env.filters['file_type'] = file_type
 
 s3_resource = boto3.resource(
    "s3",
