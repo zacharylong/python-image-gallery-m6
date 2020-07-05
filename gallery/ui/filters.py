@@ -11,5 +11,5 @@ def file_type(key):
     file_extension = file_info[1]
     try:
         return mimetypes.types_map[file_extension]
-    except KeyError():
+    except KeyError() as e:
         return 'Unknown'
