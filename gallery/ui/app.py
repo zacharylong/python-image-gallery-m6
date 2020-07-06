@@ -139,7 +139,7 @@ def listUsers():
     return render_template('list_users.html', names=x)
 
 @app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>/<string:admin>')
-def modifyUser(user, password, fullname):
+def modifyUser(user, password, fullname, admin):
     edit_user_again(user, password, fullname, admin)
     return render_template('modify_user.html', user=user, password=password, fullname=fullname, admin=admin)
 
