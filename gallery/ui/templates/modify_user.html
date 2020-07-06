@@ -11,15 +11,15 @@
       New Password: <input name="passwordToEdit" value="" required="required" /><br /><br />
       Current Full Name: <i>{{ fullname }}</i> | 
       New Full Name: <input name="fullnameToEdit" value="" required="required" /><br /><br />
-      Current admin: <i>{{ admin }} </i>
-      Admin Rights?: 
+      Current admin status: <i>{{ admin }} </i>
+      Admin Rights?: <br />
       <input type="radio" id="true" name="adminConfirm" value="true"></input> 
       <label for="true">True</label><br />
       <input type="radio" id="false" name="adminConfirm" value="false"></input>
       <label for="false">False</label><br />
 
-      <input name="adminToEdit" value="" required="required" /><br />
       <input type="hidden" name="userToEdit" value={{ user }} />
+
       <input type="submit" value="Edit!" />
     </form>
   </body>
