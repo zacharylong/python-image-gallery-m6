@@ -65,7 +65,7 @@ def requires_admin(view):
 def requires_login(view):
     @wraps(view)
     def decorated(**kwargs):
-        if check_notLoggedIn():
+        if not check_notLoggedIn():
             flash("Must be logged in to view resource")
             return redirect('/login') 
         return view(**kwargs)
