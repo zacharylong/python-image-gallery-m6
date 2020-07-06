@@ -290,3 +290,7 @@ def delete():
 
     flash('File deleted successfully')
     return redirect(url_for('files'))
+
+@app.route('/fullSize/<string:imageurl>')
+def full_size(imageurl):
+    return render_template('full_size.html', imageurl=imageurl)
