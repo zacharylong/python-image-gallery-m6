@@ -302,3 +302,8 @@ def delete():
 @app.route('/fullSize/<string:imageurl>')
 def full_size(imageurl):
     return render_template('full_size.html', imageurl=imageurl)
+
+@app.route('/logout')
+def logout(user):
+    user = session['username']
+    return redirect(url_for('home_page'))
