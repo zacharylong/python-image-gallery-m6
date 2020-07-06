@@ -267,7 +267,7 @@ def viewImages():
 
 @app.route('/files')
 def files():
-    currentuser = session['username']
+    currentuser = str(session['username'])
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     summaries = my_bucket.objects.all()
