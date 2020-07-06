@@ -48,14 +48,26 @@ def get_user_dao():
 def check_admin():
     return 'username' in session and (session['username'] == 'Zac' or session['username'] == 'Dongji')
 
+def check_loggedin():
+    return 'username' in session and (session['username'] != "" or session['username'] != None)
+
 def requires_admin(view):
     @wraps(view)
     def decorated(**kwargs):
         if not check_admin():
+            flash("Admin must be True to view resource")
             return redirect('/login') 
         return view(**kwargs)
     return decorated
 
+def requires_login(view):
+    @wraps(view)
+    def decorated(**kwargs):
+        if not check_loggedin():
+            flash("Must be logged in to view resource")
+            return redirect('/login') 
+        return view(**kwargs)
+    return decorated
 
 # users list using the dao this time from example
 @app.route('/admin/users')
@@ -74,6 +86,7 @@ def deleteUserdao(username):
     )
 
 @app.route('/admin/executeDeleteUser/<username>')
+@requires_admin
 def executeDeleteUser(username):
     get_user_dao.delete_user(username)
     return redirect('/admin/users')
@@ -141,6 +154,7 @@ def listUsers():
     return render_template('list_users.html', names=x)
 
 @app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>/<string:admin>')
+@requires_admin
 def modifyUser(user, password, fullname, admin):
     edit_user_again(user, password, fullname, admin)
     return render_template('modify_user.html', user=user, password=password, fullname=fullname, admin=admin)
@@ -257,18 +271,22 @@ def login():
 # https://kishstats.com/tags/#flask
 
 @app.route('/uploadImage')
+@requires_login
 def uploadImage():
     currentuser = session['username']
     return render_template('upload.html', currentuser=currentuser)
 
 @app.route('/viewImages')
+@requires_login
 def viewImages():
+    currentuser = session['username']
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     summaries = my_bucket.objects.all()
     return render_template('viewImages.html', my_bucket=my_bucket, files=summaries)
 
 @app.route('/files')
+@requires_login
 def files():
     currentuser = session['username']
     s3_resource = boto3.resource('s3')
@@ -278,6 +296,7 @@ def files():
     return render_template('files.html', my_bucket=my_bucket, files=summaries, currentuser=currentuser)
 
 @app.route('/upload', methods=['POST'])
+@requires_login
 def upload():
     file = request.files['file']
     currentUser = request.form['username']
@@ -289,6 +308,7 @@ def upload():
     return redirect(url_for('files'))
 
 @app.route('/delete', methods=['POST'])
+@requires_login
 def delete():
     key = request.form['key']
 
@@ -300,6 +320,7 @@ def delete():
     return redirect(url_for('files'))
 
 @app.route('/fullSize/<string:imageurl>')
+@requires_login
 def full_size(imageurl):
     return render_template('full_size.html', imageurl=imageurl)
 
