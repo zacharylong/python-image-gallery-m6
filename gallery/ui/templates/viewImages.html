@@ -3,20 +3,76 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- Adapted from https://kishstats.com/python/2018/03/15/flask-amazon-s3-part-1.html -->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>View Images</title>
+        <title>Files</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        {% block head %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+        {% endblock %}
+
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h1>View Images</h1>
         
         <script src="" async defer></script>
+
+        <h1>View Images</h1>
+
+        {% block content %}
+            <div class="container">
+            <div class="col-12-xs">
+                <h3>Bucket Gallery</h3>
+                <p>Created: {{ my_bucket.creation_date | datetimeformat }}</p>
+
+                <hr>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <p class="bg-info" style="padding: 15px;" >
+                    {% for message in messages %}
+                        <h4 style="color:blue;">{{ message }}</h4><br>
+                    {% endfor %}
+                    </p>
+                    {% endif %}
+                {% endwith %}
+                <hr>
+        
+                <table class="table table-striped">
+                    <tr>
+                      <th>Filename</th>
+                      <th>Last Modified</th>
+                      <th>Type</th>
+                      <th></th>
+                    </tr>
+                    {% for f in files %}
+                    <tr>
+                      <td><img src="https://s3-us-east-2.amazonaws.com/zacs-m6-image-gallery/{{ f.key }}" width="50%" height="50%" ></td>
+                      <td></td>
+                        <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
+                          <input type="hidden" name="key" value="{{ f.key }}">
+                          <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                        </form>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+        
+            </div>
+            </div>
+        {% endblock %}
+            <p>
+                <h2><a href="/">Back to Main Page</a></h2>
+            </p>
+
     </body>
 </html>
