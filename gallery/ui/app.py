@@ -230,7 +230,7 @@ def login():
         if user is None or user.password != request.form["password"]:
             flash('Invalid credentials, try again!')
             #return redirect('/invalidLogin')
-            return redirect('/invalidLogin')
+            return redirect('/login')
         else:
             session['username'] = request.form["username"]
             #return redirect('/debugSession')
