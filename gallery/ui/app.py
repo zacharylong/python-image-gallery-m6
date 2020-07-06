@@ -323,7 +323,7 @@ def delete():
 
 @app.route('/fullSize/<string:user>/<string:imageurl>')
 @requires_login
-def full_size(imageurl):
+def full_size(imageurl, user):
     return render_template('full_size.html', user=user, imageurl=imageurl)
 
 @app.route('/logout')
