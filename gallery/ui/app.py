@@ -281,7 +281,7 @@ def upload():
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     my_bucket.Object(currentUser+"/"+(file.filename)).put(Body=file)
-
+    print("trying to upload file as: " + (currentUser+"/"+(file.filename)))
     flash('File uploaded successfully')
     return redirect(url_for('files'))
 
