@@ -48,11 +48,11 @@
                 <table class="table table-striped">
                     <tr>
                       <th>Your Photos</th>
-                      <th></th>
+                      <th>Delete Image?</th>
                     </tr>
                     {% for f in files %}
                     <tr>
-                      <td><a href="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}"><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="10%" height="1%" ></a></td>
+                      <td><a href="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}"><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="10%" height="auto" ></a></td>
                         <td>
                             <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
                             <input type="hidden" name="key" value="{{ f.key }}">
