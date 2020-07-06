@@ -54,15 +54,8 @@
                     </tr>
                     {% for f in files %}
                     <tr>
-                      <td><img src="https://s3-us-east-2.amazonaws.com/zacs-m6-image-gallery/{{ f.key }}" width="50%" height="50%" ></td>
-                      <td></td>
-                        <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
-                          <input type="hidden" name="key" value="{{ f.key }}">
-                          <button type="submit" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash-alt"></i>
-                        </button>
-                        </form>
-                      </td>
+                      <td><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="50%" height="50%" ></td>
+                      
                     </tr>
                     {% endfor %}
                   </table>
