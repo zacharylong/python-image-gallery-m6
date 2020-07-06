@@ -62,7 +62,7 @@
                     </tr>
                     
                     {% for f in files %}
-                    {% if f.key.startswith("{{currentuser}}") %}
+                    {% if str(f.key).startswith("{{currentuser}}") %}
                     <tr>
                       <td>{{ f.key }}</td>
                       <td>{{ f.last_modified | datetimeformat }}</td>
