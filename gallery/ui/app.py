@@ -51,7 +51,7 @@ def check_admin():
 
 def check_notLoggedIn():
     # returns true if not logged in
-    return (session['username'] != "" or session['username'] != None)
+    return (session['username'] != "")
 
 def requires_admin(view):
     @wraps(view)
@@ -254,7 +254,7 @@ def login():
             return redirect('/login')
         else:
             session['username'] = request.form["username"]
-            return redirect(url_for('adminPage'))
+            return redirect(url_for('home_page'))
             #return redirect('/debugSession')
             # redirect to userlist/main page
             # return redirect('/debugSession')
