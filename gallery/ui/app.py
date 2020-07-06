@@ -51,7 +51,7 @@ def check_admin():
 
 def check_notLoggedIn():
     # returns true if not logged in
-    return 'username' in session and (session['username'] != "" or session['username'] != None)
+    return (session['username'] != "" or session['username'] != None)
 
 def requires_admin(view):
     @wraps(view)
