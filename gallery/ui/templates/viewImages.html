@@ -47,14 +47,11 @@
         
                 <table class="table table-striped">
                     <tr>
-                      <th>Filename</th>
-                      <th>Last Modified</th>
-                      <th>Type</th>
-                      <th></th>
+                      <th>Your Photos</th>
                     </tr>
                     {% for f in files %}
                     <tr>
-                      <td><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="50%" height="50%" ></td>
+                      <td><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="25%" height="25%" ></td>
                       
                     </tr>
                     {% endfor %}

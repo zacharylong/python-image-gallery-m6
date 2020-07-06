@@ -247,6 +247,9 @@ def login():
 #     return render_template('list_user.html', names=x)
 #     #return render_template('users.html', users=get_user_dao().get_users())
 
+# https://docs.ceph.com/docs/mimic/radosgw/s3/python/
+# https://kishstats.com/tags/#flask
+
 @app.route('/uploadImage')
 def uploadImage():
     return render_template('upload.html')
