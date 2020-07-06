@@ -180,7 +180,8 @@ def createExec():
     usernameToCreate = request.form['usernameToCreate']
     passwordToCreate = request.form['passwordToCreate']
     fullnameToCreate = request.form['fullnameToCreate']
-    add_user_again(usernameToCreate, passwordToCreate, fullnameToCreate)
+    adminToCreate = request.form['adminToCreate']
+    add_user_again(usernameToCreate, passwordToCreate, fullnameToCreate, adminToCreate)
     return render_template('create_success.html')
 
 @app.route('/rest', methods = ['GET', 'POST'])

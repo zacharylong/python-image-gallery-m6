@@ -103,18 +103,19 @@ def add_user():
         connection.rollback()
         ##print("Cannot insert due to error %s, user already exists" % error )
 
-def add_user_again(usernameToCreate, passwordToCreate, fullnameToCreate):
+def add_user_again(usernameToCreate, passwordToCreate, fullnameToCreate, adminToCreate):
     try:
         print("Adding user to the system")                                                                                                  
         create_user = usernameToCreate
         create_password = passwordToCreate
         create_full_name = fullnameToCreate
+        create_admin = adminToCreate
         test_insert = execute("select * from users where username = '%s';" % create_user)
         if test_insert == create_user:
             print("Error: user with username %s already exists" % create_user)
 
         else:
-            res = execute('insert into users values (%s, %s, %s);', (create_user, create_password, create_full_name))
+            res = execute('insert into users values (%s, %s, %s, %s);', (create_user, create_password, create_full_name, create_admin))
             print("Created user: %s" % create_user)
             
     except psycopg2.Error as e:
