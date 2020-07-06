@@ -46,7 +46,7 @@ def get_user_dao():
     return PostgresUserDAO()
 
 def check_admin():
-    return 'username' in session and session['username'] == 'Zac'
+    return 'username' in session and (session['username'] == 'Zac' or session['username'] == 'Dongji')
 
 def requires_admin(view):
     @wraps(view)
@@ -55,6 +55,7 @@ def requires_admin(view):
             return redirect('/login') 
         return view(**kwargs)
     return decorated
+
 
 # users list using the dao this time from example
 @app.route('/admin/users')
