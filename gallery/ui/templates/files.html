@@ -45,10 +45,10 @@
                 {% endwith %}
                 <hr>
         
-                <form class="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                <form class="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data"><br />
                     <p><input type="file" name="file"></p>
                     <input type="hidden" name="username" value="{{ currentuser }}" />
-                    <b>Debug: current username script has is: {{ currentuser }}</b>
+                    <!-- <b>Debug: current username script has is: {{ currentuser }}</b> -->
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
 
@@ -62,7 +62,7 @@
                     </tr>
                     {% for f in files %}
                     <tr>
-                      <td>{{ f.key }}</td>
+                      <td>{{ f.key | select("{{ currentuser }}/") }}</td>
                       <td>{{ f.last_modified | datetimeformat }}</td>
                       <td>{{ f.key }}</td>
                       <td>
