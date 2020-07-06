@@ -24,7 +24,7 @@
         
         <script src="" async defer></script>
 
-        <h1>View Images</h1>
+        <h1>View {{ currentuser}}'s Images</h1>
 
         {% block content %}
             <div class="container">
@@ -47,10 +47,11 @@
         
                 <table class="table table-striped">
                     <tr>
-                      <th>Your Photos</th>
+                      <th>{{ currentuser}}'s Photos</th>
                       <th>Delete Image?</th>
                     </tr>
                     {% for f in files %}
+                    {% if currentuser in f.key %}
                     <tr>
                       <td><a href="/fullSize/{{ f.key }}"><img src="https://zacs-m6-image-gallery.s3.us-east-2.amazonaws.com/{{ f.key }}" width="10%" height="auto" ></a></td>
                         <td>
@@ -62,6 +63,7 @@
                             </form>
                         </td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
                   </table>
         
