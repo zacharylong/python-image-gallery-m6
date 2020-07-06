@@ -11,7 +11,7 @@ class PostgresUserDAO(UserDAO):
         result = []
         cursor = execute("select username,password,full_name,admin from users")
         for t in cursor.fetchall():
-            result.append(User(t[0], t[1], t[2], str(t[3])))
+            result.append(User(t[0], t[1], t[2]))
         return result
 
     def delete_user(self, username):
@@ -23,4 +23,4 @@ class PostgresUserDAO(UserDAO):
         if row is None:
             return None
         else:
-            return User(row[0], row[1], row[2], str(row[3]))
+            return User(row[0], row[1], row[2])
