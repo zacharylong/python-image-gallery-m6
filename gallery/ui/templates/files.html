@@ -63,7 +63,7 @@
                     <tr>
                       <td>{{ f.key }}</td>
                       <td>{{ f.last_modified | datetimeformat }}</td>
-                      <td>{{ f.key | file_type }}</td>
+                      <td>{{ f.key }}</td>
                       <td>
                         <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
                           <input type="hidden" name="key" value="{{ f.key }}">
