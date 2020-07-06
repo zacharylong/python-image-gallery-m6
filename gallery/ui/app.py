@@ -255,7 +255,8 @@ def login():
 
 @app.route('/uploadImage')
 def uploadImage():
-    return render_template('upload.html')
+    currentuser = session['username']
+    return render_template('upload.html', currentuser=currentuser)
 
 @app.route('/viewImages')
 def viewImages():
@@ -266,19 +267,20 @@ def viewImages():
 
 @app.route('/files')
 def files():
+    currentuser = session['username']
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     summaries = my_bucket.objects.all()
 
-    return render_template('files.html', my_bucket=my_bucket, files=summaries)
+    return render_template('files.html', my_bucket=my_bucket, files=summaries, currentuser=currentuser)
 
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
-
+    currentUser = request.form['username']
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
-    my_bucket.Object(file.filename).put(Body=file)
+    my_bucket.Object(currentUser+file.filename).put(Body=file)
 
     flash('File uploaded successfully')
     return redirect(url_for('files'))
