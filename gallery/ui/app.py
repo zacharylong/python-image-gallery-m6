@@ -304,6 +304,7 @@ def full_size(imageurl):
     return render_template('full_size.html', imageurl=imageurl)
 
 @app.route('/logout')
-def logout(user):
-    user = session['username']
+def logout():
+    currentUser = session['username']
+    session['username'] = ""
     return redirect(url_for('home_page'))
