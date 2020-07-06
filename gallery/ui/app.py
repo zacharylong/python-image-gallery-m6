@@ -138,10 +138,10 @@ def listUsers():
     x = list_users_again()
     return render_template('list_users.html', names=x)
 
-@app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>')
+@app.route('/admin/modifyUser/<string:user>/<string:password>/<string:fullname>/<string:admin>')
 def modifyUser(user, password, fullname):
-    edit_user_again(user, password, fullname)
-    return render_template('modify_user.html', user=user, password=password, fullname=fullname)
+    edit_user_again(user, password, fullname, admin)
+    return render_template('modify_user.html', user=user, password=password, fullname=fullname, admin=admin)
 
 @app.route('/admin/modifyExec', methods=['POST'])
 @requires_admin
