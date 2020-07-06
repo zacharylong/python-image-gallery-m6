@@ -57,7 +57,7 @@ def requires_admin(view):
     return decorated
 
 # users list using the dao this time from example
-@app.route('/admin/usersdao')
+@app.route('/admin/users')
 def usersdao():
     return render_template('users.html', users=get_user_dao().get_users())
 
@@ -67,13 +67,13 @@ def deleteUserdao(username):
                             title="Confirm delete",
                             message="Are you sure you want to delete this user?",
                             on_yes="/admin/executeDeleteUser"+username,
-                            on_no="/admin/usersdao"
+                            on_no="/admin/users"
     )
 
 @app.route('/admin/executeDeleteUser/<username>')
 def executeDeleteUser(username):
     get_user_dao.delete_user(username)
-    return redirect('/admin/usersdao')
+    return redirect('/admin/users')
 
 # flaskdrive tutorial but upload never worked
 # @app.route('/storage')
@@ -240,12 +240,12 @@ def login():
     else: 
         return render_template('login.html')
 
-@app.route('/admin/users')
-@requires_admin
-def users():
-    x = list_users()
-    return render_template('list_user.html', names=x)
-    #return render_template('users.html', users=get_user_dao().get_users())
+# @app.route('/admin/users')
+# @requires_admin
+# def users():
+#     x = list_users()
+#     return render_template('list_user.html', names=x)
+#     #return render_template('users.html', users=get_user_dao().get_users())
 
 @app.route('/uploadImage')
 def uploadImage():
