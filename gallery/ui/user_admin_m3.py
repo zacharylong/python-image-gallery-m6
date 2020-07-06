@@ -147,15 +147,17 @@ def edit_user():
         else:
             print('No such user.')
 
-def edit_user_again(userToEdit, passwordToEdit, fullnameToEdit):
+def edit_user_again(userToEdit, passwordToEdit, fullnameToEdit, adminToEdit):
     user_to_edit = userToEdit
     connect()
     cursor = connection.cursor()
     cursor.execute('select * from users')
     new_password = passwordToEdit
     new_full_name = fullnameToEdit
+    new_admin = adminToEdit
     exec_pass_update = execute("update users set password=%s where username=%s", (new_password, user_to_edit))
     exec_name_update = execute("update users set full_name=%s where username=%s", (new_full_name, user_to_edit))
+    exec_admin_update = execute("update users set admin=%s where username=%s", (new_admin, user_to_edit))
     connection.commit()
 
 def delete_user():

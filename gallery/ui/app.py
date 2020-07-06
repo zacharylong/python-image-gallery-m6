@@ -149,7 +149,8 @@ def modifyExec():
     passwordToEdit = request.form['passwordToEdit']
     fullnameToEdit = request.form['fullnameToEdit']
     userToEdit = request.form['userToEdit']
-    edit_user_again(userToEdit, passwordToEdit, fullnameToEdit)
+    adminToEdit = request.form['adminConfirm']
+    edit_user_again(userToEdit, passwordToEdit, fullnameToEdit, adminToEdit)
     return render_template('edit_success.html')
 
 @app.route('/admin/deleteUser/<string:user>')
