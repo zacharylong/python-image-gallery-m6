@@ -9,7 +9,7 @@ class PostgresUserDAO(UserDAO):
 
     def get_users(self):
         result = []
-        cursor = execute("select username,password,full_name from users")
+        cursor = execute("select username,password,full_name,admin from users")
         for t in cursor.fetchall():
             result.append(User(t[0], t[1], t[2]))
         return result
@@ -18,7 +18,7 @@ class PostgresUserDAO(UserDAO):
         execute("delete from users where username=%s", (username,))
 
     def get_user_by_username(self, username):
-        cursor = execute("select username,password,full_name from users where username=%s", (username,))
+        cursor = execute("select username,password,full_name,admin from users where username=%s", (username,))
         row = cursor.fetchone()
         if row is None:
             return None

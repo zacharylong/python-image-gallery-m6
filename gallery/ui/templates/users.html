@@ -19,7 +19,7 @@
         <ol>
             {% if users %}
                 {% for user in users %}
-                <li><a href="/admin/editUser/{{ user.username }}">{{ user.full_name }} ({{ user.username }})</a> -- <a href="/admin/deleteUserdao/{{ user.username }}">Delete</a> </li>
+                <li><a href="/admin/modifyUser/{{ user.username }}/{{ user.password}}/{{ user.full_name }}/{{ user.admin}}">{{ user.full_name }} ({{ user.username }})</a> -- <a href="/admin/deleteUserdao/{{ user.username }}">Delete</a> </li>
                 {% endfor %}
 
             {% else %}

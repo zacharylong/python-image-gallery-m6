@@ -19,7 +19,7 @@
 
         <ul class=entires>
           {% for entry in results %}
-          <li><h3><a href="/admin/modifyUser/{{ entry[0] }}/{{ entry[1] }}/{{ entry[2] }}">{{ entry[0] }}</a>
+          <li><h3><a href="/admin/modifyUser/{{ entry[0] }}/{{ entry[1] }}/{{ entry[2] }}/{{ entry[3] }}">{{ entry[0] }}</a>
 	      <a href="/admin/deleteUser/{{ entry[0] }}">Delete User</a></h3></li>
           <br>
           {% else %}
