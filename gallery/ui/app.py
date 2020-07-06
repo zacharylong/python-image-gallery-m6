@@ -59,10 +59,12 @@ def requires_admin(view):
 
 # users list using the dao this time from example
 @app.route('/admin/users')
+@requires_admin
 def usersdao():
     return render_template('users.html', users=get_user_dao().get_users())
 
 @app.route('/admin/deleteUserdao/<username>')
+@requires_admin
 def deleteUserdao(username):
     return render_template("confirm.html",
                             title="Confirm delete",
@@ -267,7 +269,7 @@ def viewImages():
 
 @app.route('/files')
 def files():
-    currentuser = str(session['username'])
+    currentuser = session['username']
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     summaries = my_bucket.objects.all()
