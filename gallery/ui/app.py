@@ -46,9 +46,11 @@ def get_user_dao():
     return PostgresUserDAO()
 
 def check_admin():
+    # returns true if admin
     return 'username' in session and (session['username'] == 'Zac' or session['username'] == 'Dongji')
 
-def check_loggedin():
+def check_notLoggedIn():
+    # returns true if not logged in
     return 'username' in session and (session['username'] != "" or session['username'] != None)
 
 def requires_admin(view):
@@ -63,7 +65,7 @@ def requires_admin(view):
 def requires_login(view):
     @wraps(view)
     def decorated(**kwargs):
-        if not check_loggedin():
+        if check_notLoggedIn():
             flash("Must be logged in to view resource")
             return redirect('/login') 
         return view(**kwargs)
