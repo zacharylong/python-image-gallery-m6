@@ -60,9 +60,11 @@
                       <th>Type</th>
                       <th></th>
                     </tr>
+                    
                     {% for f in files %}
+                    {% if f.key.startswith("currentuser") %}
                     <tr>
-                      <td>{{ f.key | select("{{ currentuser }}/") }}</td>
+                      <td>{{ f.key }}</td>
                       <td>{{ f.last_modified | datetimeformat }}</td>
                       <td>{{ f.key }}</td>
                       <td>
@@ -74,6 +76,7 @@
                         </form>
                       </td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
                   </table>
         
