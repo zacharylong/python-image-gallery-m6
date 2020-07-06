@@ -11,6 +11,12 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        {% block head %}
+        {{super()}}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+        {% endblock %}
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -47,17 +53,28 @@
 
                 <hr>
                 <table class="table table-striped">
-                <tr>
-                    <th>Filename</th>
-                    <th>Last Modified</th>
-                </tr>
-                {% for f in files %}
-                <tr>
-                    <td>{{ f.key }}</td>
-                    <td>{{ f.last_modified | datetimeformat }}</td>
-                </tr>
-                {% endfor %}
-                </table>
+                    <tr>
+                      <th>Filename</th>
+                      <th>Last Modified</th>
+                      <th>Type</th>
+                      <th></th>
+                    </tr>
+                    {% for f in files %}
+                    <tr>
+                      <td>{{ f.key }}</td>
+                      <td>{{ f.last_modified | datetimeformat }}</td>
+                      <td>{{ f.key | file_type }}</td>
+                      <td>
+                        <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
+                          <input type="hidden" name="key" value="{{ f.key }}">
+                          <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                        </form>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
         
             </div>
             </div>

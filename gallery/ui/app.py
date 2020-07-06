@@ -273,3 +273,14 @@ def upload():
 
     flash('File uploaded successfully')
     return redirect(url_for('files'))
+
+@app.route('/delete', methods=['POST'])
+def delete():
+    key = request.form['key']
+
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    my_bucket.Object(key).delete()
+
+    flash('File deleted successfully')
+    return redirect(url_for('files'))
