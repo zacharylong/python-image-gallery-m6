@@ -238,7 +238,7 @@ def login():
             return redirect('/login')
         else:
             session['username'] = request.form["username"]
-            return redirect(url_for('admin'))
+            return redirect(url_for('/admin'))
             #return redirect('/debugSession')
             # redirect to userlist/main page
             # return redirect('/debugSession')
