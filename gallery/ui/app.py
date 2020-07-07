@@ -35,7 +35,6 @@ UPLOAD_FOLDER = "uploads"
 BUCKET = "zacs-m6-image-gallery"
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 #app.jinja_env.filters['file_type'] = file_type
-session['username'] = ""
 
 s3_resource = boto3.resource(
    "s3",
@@ -52,7 +51,7 @@ def check_admin():
 
 def check_notLoggedIn():
     # returns true if not logged in
-    return (session['username'] != "")
+    return 'username' in session and (session['username'] != "")
 
 def requires_admin(view):
     @wraps(view)
