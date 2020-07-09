@@ -329,7 +329,9 @@ def full_size(imageurl, user):
 auth_client_id = "6c5asajum9ajlmldn3b1ogpp69"
 auth_client_secret = get_secret_cognito_secret()
 auth_endpoint = "https://m7-image-gallery-auth.auth.us-east-2.amazoncognito.com"
-auth_login_callback = "https://www.whoiszac.com/loginCallback"
+auth_base = "https://www.whoiszac.com"
+auth_callback_path = "/loginCallback"
+auth_login_callback = auth_base + auth_callback_path
 
 @app.route('/')
 def slash():
@@ -347,3 +349,9 @@ def login():
                 "scope": "openid profile"}
     login_url = login_url + urllib.parse.urlencode(params)
     return redirect(login_url)
+
+@app.route(auth_callback_path)
+def loginCallback():
+    code = request.args.get("code")
+    print(code)
+    return "" 
