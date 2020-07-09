@@ -7,7 +7,7 @@ from flask import redirect, url_for
 #turn off above to run in-directory
 from .user_admin_m3 import connect, execute, add_user_again, edit_user_again, delete_user_again, list_users_again
 from flask import session
-from .secrets import get_secret_flask_session
+from .secrets import get_secret_flask_session, get_secret_cognito_secret
 from functools import wraps
 from .s3 import list_files, download_file, upload_file
 import os
@@ -21,6 +21,7 @@ import logging
 from botocore.exceptions import ClientError
 from .s3config import S3_BUCKET, S3_KEY, S3_SECRET
 from .filters import datetimeformat
+import urllib
 
 
 app = Flask(__name__)
@@ -117,10 +118,10 @@ def executeDeleteUser(username):
 
 #         return send_file(output, as_attachment=True)
 
-
-@app.route('/')
-def home_page():
-    return render_template('main.html')
+# old home route
+# @app.route('/')
+# def home_page():
+#     return render_template('main.html')
 
 @app.route('/goodbye')
 def goodbye():
@@ -242,35 +243,26 @@ def invalidLogin():
     # Implement Message Flashing here
     # moved this to regular login to flash and redirect.
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = get_user_dao().get_user_by_username(request.form["username"])
-        print("Got this user by username ---> " + str(user))
-        if user is None or user.password != request.form["password"]:
-            flash('Invalid credentials, try again!')
-            #return redirect('/invalidLogin')
-            return redirect('/login')
-        else:
-            session['username'] = request.form["username"]
-            return redirect(url_for('home_page'))
-            #return redirect('/debugSession')
-            # redirect to userlist/main page
-            # return redirect('/debugSession')
+# M6 version
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         user = get_user_dao().get_user_by_username(request.form["username"])
+#         print("Got this user by username ---> " + str(user))
+#         if user is None or user.password != request.form["password"]:
+#             flash('Invalid credentials, try again!')
+#             #return redirect('/invalidLogin')
+#             return redirect('/login')
+#         else:
+#             session['username'] = request.form["username"]
+#             return redirect(url_for('home_page'))
+#             #return redirect('/debugSession')
+#             # redirect to userlist/main page
+#             # return redirect('/debugSession')
             
-    else: 
-        return render_template('login.html')
+#     else: 
+#         return render_template('login.html')
 
-# @app.route('/admin/users')
-# @requires_admin
-# def users():
-#     x = list_users()
-#     return render_template('list_user.html', names=x)
-#     #return render_template('users.html', users=get_user_dao().get_users())
-
-# https://docs.ceph.com/docs/mimic/radosgw/s3/python/
-# https://kishstats.com/tags/#flask
 
 @app.route('/uploadImage')
 @requires_login
@@ -326,8 +318,32 @@ def delete():
 def full_size(imageurl, user):
     return render_template('full_size.html', user=user, imageurl=imageurl)
 
-@app.route('/logout')
-def logout():
-    currentUser = session['username']
-    session['username'] = ""
-    return redirect(url_for('home_page'))
+# M6 version
+# @app.route('/logout')
+# def logout():
+#     currentUser = session['username']
+#     session['username'] = ""
+#     return redirect(url_for('home_page'))
+
+# Cognito stuff from M7
+auth_client_id = "6c5asajum9ajlmldn3b1ogpp69"
+auth_client_secret = get_secret_cognito_secret()
+auth_endpoint = "https://m7-image-gallery-auth.auth.us-east-2.amazoncognito.com"
+auth_login_callback = "https://www.whoiszac.com/loginCallback"
+
+@app.route('/')
+def slash():
+    if 'user_id' in session:
+        return "<h2>" + session['user_id'] + '</h2><a href="/logout">Logout</a> -- <a href="/login">Login again</a>'
+    else:
+        return '<a href="/login">Login</a>'
+
+@app.route('/login')
+def login():
+    login_url = auth_endpoint + "/oauth2/authorize"
+    params = {"response_type": "code",
+                "client_id": auth_client_id,
+                "redirect_uri": auth_login_callback,
+                "scope": "openid profile"}
+    login_url = login_url + urllib.parse.urlencode(params)
+    return redirect(login_url)
