@@ -340,7 +340,7 @@ def slash():
 
 @app.route('/login')
 def login():
-    login_url = auth_endpoint + "/oauth2/authorize"
+    login_url = auth_endpoint + "/oauth2/authorize?"
     params = {"response_type": "code",
                 "client_id": auth_client_id,
                 "redirect_uri": auth_login_callback,
