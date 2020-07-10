@@ -361,7 +361,7 @@ def loginCallback():
     # exchange code for token
     token_url = auth_endpoint + "/oauth2/token"
     headers = {"Authorization": "Basic " + str(base64.b64encode(bytes(auth_client_id + ":" + auth_client_secret, "ascii")), "ascii"),
-                "Content-Type": "application/x-www-form-urlencode"}
+                "Content-Type": "application/x-www-form-urlencoded"}
     params = {"grant_type": "authorization_code",
                 "client_id": auth_client_id,
                 "redirect_uri": auth_login_callback,
@@ -375,8 +375,8 @@ def loginCallback():
     # get user profile
     profile_url = auth_endpoint + "/oauth2/userInfo"
     headers = {"Authorization": "Bearer" + token["access_token"]}
-    profile_response = requests.get(profile_url, headers=headers)
-    profile = json.loads(profile_response.text)
+    profile_resp = requests.get(profile_url, headers=headers)
+    profile = json.loads(profile_resp.text)
 
     session["user_id"] = profile["sub"]
 
