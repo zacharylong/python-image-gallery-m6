@@ -22,6 +22,9 @@ from botocore.exceptions import ClientError
 from .s3config import S3_BUCKET, S3_KEY, S3_SECRET
 from .filters import datetimeformat
 import urllib
+import json
+import base64
+import requests
 
 
 app = Flask(__name__)
@@ -327,7 +330,7 @@ def full_size(imageurl, user):
 
 # Cognito stuff from M7
 auth_client_id = "6c5asajum9ajlmldn3b1ogpp69"
-auth_client_secret = get_secret_cognito_secret()
+auth_client_secret = json.loads(get_secret_cognito_secret())["secret_key"]
 auth_endpoint = "https://m7-image-gallery-auth.auth.us-east-2.amazoncognito.com"
 auth_base = "https://www.whoiszac.com"
 auth_callback_path = "/loginCallback"
@@ -354,4 +357,27 @@ def login():
 def loginCallback():
     code = request.args.get("code")
     print(code)
-    return "" 
+
+    # exchange code for token
+    token_url = auth_endpoint + "/oauth2/token"
+    headers = {"Authorization": "Basic " + str(base64.b64encode(bytes(auth_client_id + ":" + auth_client_secret, "ascii")), "ascii"),
+                "Content-Type": "application/x-www-form-urlencode"}
+    params = {"grant_type": "authorization_code",
+                "client_id": auth_client_id,
+                "redirect_uri": auth_login_callback,
+                "code": code}
+    token_resp = request.post(token_url, headers=headers, data=params)
+    print(token_resp.text)
+    token = json.loads(token_resp.text)
+    session["id_token"] = token["id_token"]
+    session["access_token"] = token["access_token"]
+
+    # get user profile
+    profile_url = auth_endpoint + "/oauth2/userInfo"
+    headers = {"Authorization": "Bearer" + token["access_token"]}
+    profile_response = requests.get(profile_url, headers=headers)
+    profile = json.loads(profile_response.text)
+
+    session["user_id"] = profile["sub"]
+
+    return redirect("/")
