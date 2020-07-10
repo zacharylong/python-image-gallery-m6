@@ -367,14 +367,14 @@ def loginCallback():
                 "redirect_uri": auth_login_callback,
                 "code": code}
     token_resp = requests.post(token_url, headers=headers, data=params)
-    print(token_resp.text)
+    #print(token_resp.text)
     token = json.loads(token_resp.text)
     session["id_token"] = token["id_token"]
     session["access_token"] = token["access_token"]
 
     # get user profile
     profile_url = auth_endpoint + "/oauth2/userInfo"
-    headers = {"Authorization": "Bearer" + token["access_token"]}
+    headers = {"Authorization": "Bearer " + token["access_token"]}
     profile_resp = requests.get(profile_url, headers=headers)
     profile = json.loads(profile_resp.text)
 
