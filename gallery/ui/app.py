@@ -366,7 +366,7 @@ def loginCallback():
                 "client_id": auth_client_id,
                 "redirect_uri": auth_login_callback,
                 "code": code}
-    token_resp = request.post(token_url, headers=headers, data=params)
+    token_resp = requests.post(token_url, headers=headers, data=params)
     print(token_resp.text)
     token = json.loads(token_resp.text)
     session["id_token"] = token["id_token"]
