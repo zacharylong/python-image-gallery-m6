@@ -32,7 +32,9 @@ def get_dbname(secret):
 
 def connect():
     global connection
-    secret = get_secret()
+    # remove secret to use environment variables
+    # secret = get_secret()
+    
     # comment out get secret for m6
     #connection = psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=get_password())
 #     {
@@ -44,7 +46,12 @@ def connect():
 #   "dbInstanceIdentifier": "m6-demo-db",
 #   "database_name": "image_gallery"
 #     }
-    connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
+
+    # re-do connection with environment variables
+    # connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
+    
+    connection =  connection = psycopg2.connect(host=os.getenv("POSTGRES_HOST"), dbname=os.getenv("POSTGRES_DB"), user=os.getenv("POSTGRES_USER"), password=os.getenv("POSTGRES_PASSWORD"), port=os.getenv("POSTGRES_PORT"), )
+
     #manual connection
     #connection = psycopg2.connect(host="m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com", dbname="image_gallery", user="image_gallery", password="n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n")
     connection.set_session(autocommit=True)
