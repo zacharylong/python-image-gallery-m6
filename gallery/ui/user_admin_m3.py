@@ -14,21 +14,23 @@ from psycopg2.errors import UniqueViolation
 
 connection = None
 
-def get_secret():
-    jsonString = get_secret_image_gallery()
-    return json.loads(jsonString)
+# Remove all of these getters, using environment variables instead
 
-def get_password(secret):       
-    return secret['password']
+# def get_secret():
+#     jsonString = get_secret_image_gallery()
+#     return json.loads(jsonString)
 
-def get_host(secret):
-    return secret['host']
+# def get_password(secret):       
+#     return secret['password']
 
-def get_username(secret):
-    return secret['username']
+# def get_host(secret):
+#     return secret['host']
 
-def get_dbname(secret):
-    return secret['database_name']
+# def get_username(secret):
+#     return secret['username']
+
+# def get_dbname(secret):
+#     return secret['database_name']
 
 def connect():
     global connection

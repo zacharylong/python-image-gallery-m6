@@ -1,3 +1,5 @@
+# https://able.bio/rhett/how-to-set-and-get-environment-variables-in-python--274rgt5#:~:text=To%20set%20and%20get%20environment%20variables%20in%20Python%20you%20can,Get%20environment%20variables%20USER%20%3D%20os.
+
 from flask import Flask
 from flask import request
 from flask import render_template
