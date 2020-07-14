@@ -50,7 +50,7 @@ def connect():
     # re-do connection with environment variables
     # connection = psycopg2.connect(host=get_host(secret), dbname=get_dbname(secret), user=get_username(secret), password=get_password(secret))
     
-    connection =  connection = psycopg2.connect(host=os.getenv("POSTGRES_HOST"), dbname=os.getenv("POSTGRES_DB"), user=os.getenv("POSTGRES_USER"), password=os.getenv("POSTGRES_PASSWORD"), port=os.getenv("POSTGRES_PORT"), )
+    connection = psycopg2.connect(host=os.getenv("POSTGRES_HOST"), dbname=os.getenv("POSTGRES_DB"), user=os.getenv("POSTGRES_USER"), password=os.getenv("POSTGRES_PASSWORD"), port=os.getenv("POSTGRES_PORT"), )
 
     #manual connection
     #connection = psycopg2.connect(host="m6-demo-db.ccywtilknp5x.us-east-2.rds.amazonaws.com", dbname="image_gallery", user="image_gallery", password="n,|gRz$#_Bc&EmAjyI)t[j3vCv^4ty4n")
