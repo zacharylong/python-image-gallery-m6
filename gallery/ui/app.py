@@ -9,7 +9,7 @@ from flask import redirect, url_for
 #turn off above to run in-directory
 from .user_admin_m3 import connect, execute, add_user_again, edit_user_again, delete_user_again, list_users_again
 from flask import session
-from .secrets import get_secret_flask_session, get_secret_cognito_secret
+#from .secrets import get_secret_flask_session, get_secret_cognito_secret
 from functools import wraps
 from .s3 import list_files, download_file, upload_file
 import os
@@ -332,7 +332,8 @@ def full_size(imageurl, user):
 
 # Cognito stuff from M7
 auth_client_id = "6c5asajum9ajlmldn3b1ogpp69"
-auth_client_secret = json.loads(get_secret_cognito_secret())["secret_key"]
+auth_client_secret = os.getenv("COGNITO_SECRET")
+#auth_client_secret = json.loads(get_secret_cognito_secret())["secret_key"]
 auth_endpoint = "https://m7-image-gallery-auth.auth.us-east-2.amazoncognito.com"
 auth_base = "https://www.whoiszac.com"
 auth_callback_path = "/loginCallback"
