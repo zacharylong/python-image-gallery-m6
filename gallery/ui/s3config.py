@@ -1,5 +1,4 @@
 import os
-from .secrets import get_secret_s3_key, get_secret_s3_secret
 
 # hard coded from new IAM role for bucket only access
 
